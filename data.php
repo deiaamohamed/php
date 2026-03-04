@@ -51,7 +51,10 @@ file_put_contents("users.txt", $record, FILE_APPEND);
                 echo "<td>$data</td>";
             
         }
-        echo "<td><a href='view.php?id=$idx'>View</a></td>";
+        echo "<td>
+        <a href='view.php?id=$idx'>View</a> | 
+        <a href='delete.php?id=$idx'>Delete</a>
+      </td>";
         echo "</tr>";
     }
     ?>

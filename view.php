@@ -2,9 +2,13 @@
 $row_number = $_GET['id'];
 
 $lines = file(__DIR__ . "/users.txt");
-
-$user_line = $lines[$row_number];
-
+if(!isset($lines[$row_number])) {
+    echo "User not found.";
+    exit();
+}
+else {
+    $user_line = $lines[$row_number];
+}
 $user_data = explode(",", $user_line);
 ?>
 

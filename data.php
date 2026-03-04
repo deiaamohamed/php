@@ -11,8 +11,15 @@ if(isset($_GET['submit'])){
     $username=$_GET['username'];
     $password=$_GET['password'];
     $department=$_GET['department'];    
+
+
+$skills_string = implode("-", $skills);
+
+$record = "$fname,$lname,$address,$country,$gender,$skills_string,$username,$password,$department".PHP_EOL;
+file_put_contents("users.txt", $record, FILE_APPEND);
     
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

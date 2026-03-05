@@ -1,63 +1,54 @@
 <?php
+require "dbconfig.php";
 
+$sql = "SELECT * FROM users";
+$result = mysqli_query($connection, $sql);
+?>
 
-if(isset($_GET['submit'])){
-   $fname=$_GET['name'];
-    $lname=$_GET['lastname'];
-    $address=$_GET['address'];
-    $country=$_GET['country'];
-    $gender=$_GET['gender'];
-    $skills=$_GET['skills'];
-    $username=$_GET['username'];
-    $password=$_GET['password'];
-    $department=$_GET['department'];    
+<hr>
+<h3>Users</h3>
 
+<table border="1" cellpadding="10">
+<tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Address</th>
+    <th>Country</th>
+    <th>Gender</th>
+    <th>Skills</th>
+    <th>Username</th>
+    <th>Department</th>
+    <th>Action</th>
+</tr>
 
-$skills_string = implode("-", $skills);
+<?php
 
-$record = "$fname,$lname,$address,$country,$gender,$skills_string,$username,$password,$department".PHP_EOL;
-file_put_contents("users.txt", $record, FILE_APPEND);
-    
+while($user = mysqli_fetch_assoc($result)) {
+
+    echo "<tr>";
+
+    echo "<td>".$user['first_name']."</td>";
+    echo "<td>".$user['last_name']."</td>";
+    echo "<td>".$user['address']."</td>";
+    echo "<td>".$user['country']."</td>";
+    echo "<td>".$user['gender']."</td>";
+    echo "<td>".$user['skills']."</td>";
+    echo "<td>".$user['username']."</td>";
+    echo "<td>".$user['department']."</td>";
+
+    echo "<td>
+        <a href='view.php?id=".$user['id']."'>View</a> |
+        <a href='delete.php?id=".$user['id']."'>Delete</a>
+    </td>";
+
+    echo "</tr>";
 }
 
 ?>
-<hr>
-<h3>Users</h3>
-<table border="1" cellpadding="10">
-    <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Address</th>
-        <th>Country</th>
-        <th>Gender</th>
-        <th>Skills</th>
-        <th>Username</th>
-        <th>Password</th>
-        <th>Department</th>
-        <th>Action</th>
-    </tr>
-    
-    <?php
-    $lines = file(__DIR__ . "/users.txt"); 
 
-    foreach($lines as $idx=> $line) {
-        
-        $user_data = explode(",", $line); 
-        
-        echo "<tr>";
-        
-        foreach($user_data as $data) {
-            
-                echo "<td>$data</td>";
-            
-        }
-        echo "<td>
-        <a href='view.php?id=$idx'>View</a> | 
-        <a href='delete.php?id=$idx'>Delete</a>
-      </td>";
-        echo "</tr>";
-    }
-    ?>
 </table>
 
+<?php
+mysqli_close($connection);
 
+?>

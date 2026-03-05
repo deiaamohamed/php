@@ -18,5 +18,6 @@ mysqli_query($connection, $sql);
 echo "Inserted successfully";
 
 mysqli_close($connection);
+header("Location: data.php");
 
 ?>

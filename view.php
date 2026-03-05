@@ -1,26 +1,43 @@
 <?php
-$row_number = $_GET['id'];
+require "dbconfig.php";
 
-$lines = file(__DIR__ . "/users.txt");
-if(!isset($lines[$row_number])) {
-    echo "User not found.";
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM users WHERE id = $id";
+$result = mysqli_query($connection, $sql);
+
+if(mysqli_num_rows($result) == 0){
+    echo "User not found";
     exit();
 }
-else {
-    $user_line = $lines[$row_number];
-}
-$user_data = explode(",", $user_line);
+
+$user = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<head>
+<title>User Details</title>
+</head>
 <body>
-    <h2>User Details</h2>
-    <p>First Name: <?php echo $user_data[0]; ?></p>
-    <p>Last Name: <?php echo $user_data[1]; ?></p>
-    <p>Address: <?php echo $user_data[2]; ?></p>
-    
-    <br>
-    <a href="data.php">Back to List</a>
+
+<h2>User Details</h2>
+
+<p>First Name: <?php echo $user['first_name']; ?></p>
+<p>Last Name: <?php echo $user['last_name']; ?></p>
+<p>Address: <?php echo $user['address']; ?></p>
+<p>Country: <?php echo $user['country']; ?></p>
+<p>Gender: <?php echo $user['gender']; ?></p>
+<p>Skills: <?php echo $user['skills']; ?></p>
+<p>Username: <?php echo $user['username']; ?></p>
+
+<br>
+
+<a href="data.php">Back to List</a>
+
 </body>
 </html>
+
+<?php
+mysqli_close($connection);
+?>

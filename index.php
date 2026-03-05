@@ -13,7 +13,7 @@
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Registration Form</h3>
 
-        <form action="dbconfig.php" method="POST">
+        <form action="register.php" method="POST">
 
             <div class="mb-3">
                 <label for="first_name" class="form-label">First Name:</label>

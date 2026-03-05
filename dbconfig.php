@@ -7,6 +7,5 @@ if(!$connection){
 }
 
 
-$connection->close();
 
 ?>

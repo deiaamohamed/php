@@ -1,14 +1,17 @@
 <?php
-$row_number = $_GET['id'];
+require "dbconfig.php";
 
-$lines = file(__DIR__ . "/users.txt");
-if(isset($lines[$row_number])) {
- unset($lines[$row_number]);
-}else {
+$id = $_GET['id'];
+
+$check = mysqli_query($connection, "SELECT id FROM users WHERE id = $id");
+if (mysqli_num_rows($check) == 0) {
     echo "User not found.";
     exit();
 }
-file_put_contents(__DIR__ . "/users.txt", implode("", $lines));
+
+mysqli_query($connection, "DELETE FROM users WHERE id = $id");
+
+mysqli_close($connection);
 
 header("Location: data.php");
 exit();

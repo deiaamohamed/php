@@ -13,16 +13,16 @@
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Registration Form</h3>
 
-        <form action="data.php" method="GET">
+        <form action="dbconfig.php" method="POST">
 
             <div class="mb-3">
-                <label for="name" class="form-label">First Name:</label>
-                <input type="text" id="name" name="name" class="form-control" minlength="3" required>
+                <label for="first_name" class="form-label">First Name:</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" minlength="3" required>
             </div>
 
             <div class="mb-3">
-                <label for="lastname" class="form-label">Last Name:</label>
-                <input type="text" id="lastname" name="lastname" class="form-control">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" class="form-control">
             </div>
 
             <div class="mb-3">

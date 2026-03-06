@@ -14,34 +14,79 @@ if(mysqli_num_rows($result) == 0){
 $user = mysqli_fetch_assoc($result);
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit User</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="card shadow">
+<div class="card-header bg-warning">
+<h4 class="mb-0">Edit User</h4>
+</div>
+
+<div class="card-body">
+
 <form action="update.php" method="POST">
 
 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
 
-First Name:
-<input type="text" name="first_name" value="<?php echo $user['first_name']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">First Name</label>
+<input type="text" class="form-control" name="first_name" value="<?php echo $user['first_name']; ?>">
+</div>
 
-Last Name:
-<input type="text" name="last_name" value="<?php echo $user['last_name']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Last Name</label>
+<input type="text" class="form-control" name="last_name" value="<?php echo $user['last_name']; ?>">
+</div>
 
-Address:
-<input type="text" name="address" value="<?php echo $user['address']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Address</label>
+<input type="text" class="form-control" name="address" value="<?php echo $user['address']; ?>">
+</div>
 
-Country:
-<input type="text" name="country" value="<?php echo $user['country']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Country</label>
+<input type="text" class="form-control" name="country" value="<?php echo $user['country']; ?>">
+</div>
 
-Gender:
-<input type="text" name="gender" value="<?php echo $user['gender']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Gender</label>
+<input type="text" class="form-control" name="gender" value="<?php echo $user['gender']; ?>">
+</div>
 
-Skills:
-<input type="text" name="skills" value="<?php echo $user['skills']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Skills</label>
+<input type="text" class="form-control" name="skills" value="<?php echo $user['skills']; ?>">
+</div>
 
-Username:
-<input type="text" name="username" value="<?php echo $user['username']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Username</label>
+<input type="text" class="form-control" name="username" value="<?php echo $user['username']; ?>">
+</div>
 
-Password:
-<input type="text" name="password" value="<?php echo $user['password_hash']; ?>"><br>
+<div class="mb-3">
+<label class="form-label">Password</label>
+<input type="text" class="form-control" name="password" value="<?php echo $user['password_hash']; ?>">
+</div>
 
-<button type="submit">Update</button>
+<button type="submit" class="btn btn-success">Update</button>
 
 </form>
+
+</div>
+</div>
+
+</div>
+
+</body>
+</html>

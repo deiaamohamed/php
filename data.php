@@ -5,11 +5,27 @@ $sql = "SELECT * FROM users";
 $result = mysqli_query($connection, $sql);
 ?>
 
-<hr>
-<h3>Users</h3>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Users List</title>
 
-<table border="1" cellpadding="10">
-<tr>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<h3 class="mb-4 text-center">Users</h3>
+
+<div class="card shadow">
+<div class="card-body">
+
+<table class="table table-bordered table-hover table-striped">
+
+<tr class="table-dark">
     <th>First Name</th>
     <th>Last Name</th>
     <th>Address</th>
@@ -37,9 +53,9 @@ while($user = mysqli_fetch_assoc($result)) {
     echo "<td>".$user['department']."</td>";
 
     echo "<td>
-        <a href='view.php?id=".$user['id']."'>View</a> |
-        <a href='delete.php?id=".$user['id']."'>Delete</a> |
-        <a href='edit.php?id=".$user['id']."'>Edit</a>
+        <a href='view.php?id=".$user['id']."' class='btn btn-info btn-sm'>View</a>
+        <a href='edit.php?id=".$user['id']."' class='btn btn-warning btn-sm'>Edit</a>
+        <a href='delete.php?id=".$user['id']."' class='btn btn-danger btn-sm'>Delete</a>
     </td>";
 
     echo "</tr>";
@@ -49,7 +65,14 @@ while($user = mysqli_fetch_assoc($result)) {
 
 </table>
 
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
+
 <?php
 mysqli_close($connection);
-
 ?>

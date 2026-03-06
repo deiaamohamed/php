@@ -113,63 +113,88 @@
         </form>
     </div>
 </div>
-    <script>
-        document.querySelector('form').addEventListener('submit', function(event) {
-            var firstName = document.getElementById('first_name').value;
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var skills = document.querySelectorAll('input[name="skills[]"]:checked');
-            if (firstName.length < 3) {
-                //alert('First Name must be at least 3 characters long.');
-                document.getElementById('first_name').setCustomValidity('First Name must be at least 3 characters long.');
-                event.preventDefault();
-            }
-            for(i=0;i<firstName.length;i++){
-                if(!isNaN(firstName[i]) ){
-                    //alert('First Name must contain only letters.');
-                    document.getElementById('first_name').setCustomValidity('First Name must contain only letters.');
-                    event.preventDefault();
-                    break;
-                }
-            }
+  <script>
+    const form = document.querySelector('form');
+    const firstNameInput = document.getElementById('first_name');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const skillInputs = document.querySelectorAll('input[name="skills[]"]');
+    const genderInputs = document.querySelectorAll('input[name="gender"]');
 
-            if (username.length < 3) {
-                //alert('Username must be at least 3 characters long.');
-                document.getElementById('username').setCustomValidity('Username must be at least 3 characters long.');
-                event.preventDefault();
-            }
+    form.addEventListener('submit', function(event) {
+        let isValid = true;
 
-            if (password.length < 4) {
-                //alert('Password must be at least 4 characters long.');
-                document.getElementById('password').setCustomValidity('Password must be at least 4 characters long.');
-                event.preventDefault();
-            }
-            for(i = 0; i < password.length; i++) {
-                if (isNaN(password[i])) {
-                    //alert('Password must contain at least one number.');
-                    document.getElementById('password').setCustomValidity('Password must contain at least one number.');
-                    event.preventDefault();
-                    break;
-                }
-                if(isupper(password[i])){
-                    alert('Password must not contain uppercase letters.');
-                    event.preventDefault();
-                    break;
-                }
-                if(password[i]=='-' || password[i]=='@' || password[i]=='#' || password[i]=='$' || password[i]=='%' || password[i]=='^' || password[i]=='&' || password[i]=='*'){
-                    alert('Password must not contain special characters.');
-                    event.preventDefault();
-                    break;
-                }
+        firstNameInput.setCustomValidity('');
+        usernameInput.setCustomValidity('');
+        passwordInput.setCustomValidity('');
+        skillInputs.forEach(skill => skill.setCustomValidity(''));
+        genderInputs.forEach(gender => gender.setCustomValidity(''));
 
-            }
-            if(skills.length == 0) {
-                //alert('Please select at least one skill.');
-                document.querySelector('input[name="skills[]"]').setCustomValidity('Please select at least one skill.');
-                event.preventDefault();
-            }
+        const firstName = firstNameInput.value.trim();
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
 
+        if (firstName.length < 3) {
+            firstNameInput.setCustomValidity('First Name must be at least 3 characters long.');
+            isValid = false;
+        } else if (/\d/.test(firstName)) {
+            firstNameInput.setCustomValidity('First Name must contain only letters.');
+            isValid = false;
+        }
+
+        if (username.length < 3) {
+            usernameInput.setCustomValidity('Username must be at least 3 characters long.');
+            isValid = false;
+        }
+
+        if (password.length < 4) {
+            passwordInput.setCustomValidity('Password must be at least 4 characters long.');
+            isValid = false;
+        } else if (!/\d/.test(password)) {
+            passwordInput.setCustomValidity('Password must contain at least one number.');
+            isValid = false;
+        } else if (/[A-Z]/.test(password)) {
+            passwordInput.setCustomValidity('Password must not contain uppercase letters.');
+            isValid = false;
+        } else if (/[-@#$%^&*]/.test(password)) {
+            passwordInput.setCustomValidity('Password must not contain special characters.');
+            isValid = false;
+        }
+
+        const checkedGender = document.querySelectorAll('input[name="gender"]:checked');
+        if (checkedGender.length === 0) {
+            genderInputs[0].setCustomValidity('Please select a gender.');
+            genderInputs[0].reportValidity();
+            isValid = false;
+        }
+
+        const checkedSkills = document.querySelectorAll('input[name="skills[]"]:checked');
+        if (checkedSkills.length === 0) {
+            skillInputs[0].setCustomValidity('Please select at least one skill.');
+            skillInputs[0].reportValidity();
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+
+    skillInputs.forEach(skill => {
+        skill.addEventListener('change', function() {
+            skillInputs.forEach(s => s.setCustomValidity(''));
         });
-    </script>
+    });
+
+    genderInputs.forEach(g => {
+        g.addEventListener('change', function() {
+            genderInputs.forEach(x => x.setCustomValidity(''));
+        });
+    });
+
+    firstNameInput.addEventListener('input', () => firstNameInput.setCustomValidity(''));
+    usernameInput.addEventListener('input', () => usernameInput.setCustomValidity(''));
+    passwordInput.addEventListener('input', () => passwordInput.setCustomValidity(''));
+</script>
 </body>
 </html>

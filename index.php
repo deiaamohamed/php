@@ -113,6 +113,63 @@
         </form>
     </div>
 </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var firstName = document.getElementById('first_name').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var skills = document.querySelectorAll('input[name="skills[]"]:checked');
+            if (firstName.length < 3) {
+                //alert('First Name must be at least 3 characters long.');
+                document.getElementById('first_name').setCustomValidity('First Name must be at least 3 characters long.');
+                event.preventDefault();
+            }
+            for(i=0;i<firstName.length;i++){
+                if(!isNaN(firstName[i]) ){
+                    //alert('First Name must contain only letters.');
+                    document.getElementById('first_name').setCustomValidity('First Name must contain only letters.');
+                    event.preventDefault();
+                    break;
+                }
+            }
 
+            if (username.length < 3) {
+                //alert('Username must be at least 3 characters long.');
+                document.getElementById('username').setCustomValidity('Username must be at least 3 characters long.');
+                event.preventDefault();
+            }
+
+            if (password.length < 4) {
+                //alert('Password must be at least 4 characters long.');
+                document.getElementById('password').setCustomValidity('Password must be at least 4 characters long.');
+                event.preventDefault();
+            }
+            for(i = 0; i < password.length; i++) {
+                if (isNaN(password[i])) {
+                    //alert('Password must contain at least one number.');
+                    document.getElementById('password').setCustomValidity('Password must contain at least one number.');
+                    event.preventDefault();
+                    break;
+                }
+                if(isupper(password[i])){
+                    alert('Password must not contain uppercase letters.');
+                    event.preventDefault();
+                    break;
+                }
+                if(password[i]=='-' || password[i]=='@' || password[i]=='#' || password[i]=='$' || password[i]=='%' || password[i]=='^' || password[i]=='&' || password[i]=='*'){
+                    alert('Password must not contain special characters.');
+                    event.preventDefault();
+                    break;
+                }
+
+            }
+            if(skills.length == 0) {
+                //alert('Please select at least one skill.');
+                document.querySelector('input[name="skills[]"]').setCustomValidity('Please select at least one skill.');
+                event.preventDefault();
+            }
+
+        });
+    </script>
 </body>
 </html>

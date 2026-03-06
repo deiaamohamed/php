@@ -39,7 +39,6 @@ while($user = mysqli_fetch_assoc($result)) {
     echo "<td>
         <a href='view.php?id=".$user['id']."'>View</a> |
         <a href='delete.php?id=".$user['id']."'>Delete</a> |
-        <a href='delete.php?id=".$user['id']."'>Delete</a> |
         <a href='edit.php?id=".$user['id']."'>Edit</a>
     </td>";
 

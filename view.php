@@ -34,6 +34,14 @@ $user = mysqli_fetch_assoc($result);
     <div class="card-body">
 
         <ul class="list-group list-group-flush">
+             <li class="list-group-item">
+               
+                <?php if(!empty($user['profile_image'])): ?>
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($user['profile_image']); ?>" width="80" height="80" style="object-fit:cover;" class="rounded">
+                <?php else: ?>
+                    No Image
+                <?php endif; ?>
+            </li>
 
             <li class="list-group-item">
                 <strong>First Name:</strong> <?php echo $user['first_name']; ?>

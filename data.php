@@ -26,6 +26,7 @@ $result = mysqli_query($connection, $sql);
 <table class="table table-bordered table-hover table-striped">
 
 <tr class="table-dark">
+        <th>Image</th>
     <th>First Name</th>
     <th>Last Name</th>
     <th>Address</th>
@@ -42,7 +43,13 @@ $result = mysqli_query($connection, $sql);
 while($user = mysqli_fetch_assoc($result)) {
 
     echo "<tr>";
-
+           echo "<td>";
+    if(!empty($user['profile_image'])) {
+        echo "<img src='data:image/jpeg;base64," . base64_encode($user['profile_image']) . "' width='80' height='80' style='object-fit:cover;' class='rounded'>";
+    } else {
+        echo "No Image";
+    }
+    echo "</td>";
     echo "<td>".$user['first_name']."</td>";
     echo "<td>".$user['last_name']."</td>";
     echo "<td>".$user['address']."</td>";

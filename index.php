@@ -13,7 +13,7 @@
     <div class="card shadow p-4">
         <h3 class="text-center mb-4">Registration Form</h3>
 
-        <form action="register.php" method="POST">
+        <form action="register.php" method="POST" enctype="multipart/form-data">
 
             <div class="mb-3">
                 <label for="first_name" class="form-label">First Name:</label>
@@ -33,7 +33,7 @@
             <div class="mb-3">
                 <label for="country" class="form-label">Country:</label>
                 <select id="country" name="country" class="form-select">
-                    <option value="EGY">EGYPT</option>
+                    <option value="EGYPT">EGYPT</option>
                     <option value="USA">USA</option>
                     <option value="KSA">KSA</option>
                 </select>
@@ -42,12 +42,12 @@
             <div class="mb-3">
                 <label class="form-label">Gender:</label><br>
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="male" name="gender" value="male" class="form-check-input">
+                    <input type="radio" id="male" name="gender" value="Male" class="form-check-input">
                     <label for="male" class="form-check-label">Male</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                    <input type="radio" id="female" name="gender" value="female" class="form-check-input">
+                    <input type="radio" id="female" name="gender" value="Female" class="form-check-input">
                     <label for="female" class="form-check-label">Female</label>
                 </div>
             </div>
@@ -82,12 +82,18 @@
             </div>
 
             <div class="mb-3">
+                <label for="profile_image" class="form-label">Profile Image:</label>
+                <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*" required>
+            </div>
+
+            <div class="mb-3">
                 <label for="department" class="form-label">Department:</label>
                 <input type="text" id="department" name="department" value="OS" class="form-control" readonly>
             </div>
+
             <div>
                 <?php
-                    $list=["OS", "CS", "IS"];
+                    $list = ["OS", "CS", "IS"];
                     
                     function randomize($list){
                         $randomIndex = array_rand($list);
@@ -95,29 +101,31 @@
                         echo "<p>Random Department: $randomValue</p>";
                         return $randomValue;
                     }
-                    $val=randomize($list);
-                    ?>
-                    <lable>capacha</label>
-                  <input type="text" name="cap" pattern="<?php echo $val; ?>">  <br><br>
-                  
+                    $val = randomize($list);
+                ?>
+                <label>Captcha</label>
+                <input type="text" name="cap" pattern="<?php echo $val; ?>" required>
+                <br><br>
             </div>
 
             <div class="d-grid">
                 <input type="submit" name="submit" value="Submit" class="btn btn-primary">
             </div>
-             <div class="d-grid">
+
+            <div class="d-grid">
                 <input type="reset" name="reset" value="Reset" class="btn btn-secondary mt-2">
             </div>
 
-            
         </form>
     </div>
 </div>
-  <script>
+
+<script>
     const form = document.querySelector('form');
     const firstNameInput = document.getElementById('first_name');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
+    const profileImageInput = document.getElementById('profile_image');
     const skillInputs = document.querySelectorAll('input[name="skills[]"]');
     const genderInputs = document.querySelectorAll('input[name="gender"]');
 
@@ -127,6 +135,7 @@
         firstNameInput.setCustomValidity('');
         usernameInput.setCustomValidity('');
         passwordInput.setCustomValidity('');
+        profileImageInput.setCustomValidity('');
         skillInputs.forEach(skill => skill.setCustomValidity(''));
         genderInputs.forEach(gender => gender.setCustomValidity(''));
 
@@ -175,6 +184,12 @@
             isValid = false;
         }
 
+        if (profileImageInput.files.length === 0) {
+            profileImageInput.setCustomValidity('Please choose an image.');
+            profileImageInput.reportValidity();
+            isValid = false;
+        }
+
         if (!isValid) {
             event.preventDefault();
         }
@@ -192,6 +207,7 @@
         });
     });
 
+    profileImageInput.addEventListener('change', () => profileImageInput.setCustomValidity(''));
     firstNameInput.addEventListener('input', () => firstNameInput.setCustomValidity(''));
     usernameInput.addEventListener('input', () => usernameInput.setCustomValidity(''));
     passwordInput.addEventListener('input', () => passwordInput.setCustomValidity(''));

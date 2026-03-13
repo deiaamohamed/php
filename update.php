@@ -1,9 +1,14 @@
 <?php
 require "dbconfig.php";
+    session_start();
 
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit();
+}
 $id = $_POST['id'];
 $image = "";
-
+$maxSize= 2 * 1024 * 1024; 
 if(isset($_FILES['profile_image']) && $_FILES['profile_image']['error']==0){
 
     if($_FILES['profile_image']['size'] > $maxSize){

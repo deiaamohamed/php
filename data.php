@@ -1,5 +1,11 @@
 <?php
 require "dbconfig.php";
+    session_start();
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit();
+}
 
 $sql = "SELECT * FROM users";
 $result = mysqli_query($connection, $sql);

@@ -1,6 +1,11 @@
 <?php
 require "dbconfig.php";
+    session_start();
 
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit();
+}
 $id = $_GET['id'];
 
 $sql = "SELECT * FROM users WHERE id = $id";

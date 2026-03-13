@@ -116,9 +116,12 @@
             <div class="d-grid">
                 <input type="reset" name="reset" value="Reset" class="btn btn-secondary mt-2">
             </div>
-
+            
         </form>
-    </div>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="logout.php" class="btn btn-danger">Logout</a>
+        </div>
+            
 </div>
 
 <script>

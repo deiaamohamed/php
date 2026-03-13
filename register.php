@@ -1,46 +1,39 @@
 <?php
 
-require "dbconfig.php";
+require "classes/Database.php";
+require "classes/User.php";
 
-if (isset($_POST['skills'])) {
-    $skills = implode(",", $_POST['skills']);
-} else {
-    $skills = "";
-}
+$database = new Database();
+$userObj = new User($database);
 
+$first_name = $_POST['first_name'] ?? '';
+$last_name = $_POST['last_name'] ?? '';
+$address = $_POST['address'] ?? '';
+$country = $_POST['country'] ?? '';
+$gender = $_POST['gender'] ?? '';
+$skills = $_POST['skills'] ?? [];
+$username = $_POST['username'] ?? '';
+$password = $_POST['password'] ?? '';
 
-
+$image = null;
 if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
-
+    $maxSize = 2 * 1024 * 1024;
+    
+    if ($_FILES['profile_image']['size'] > $maxSize) {
+        die("Image too large. Maximum size is 2MB.");
+    }
+    
     $image = file_get_contents($_FILES['profile_image']['tmp_name']);
-    $maxSize = 2 * 1024 * 1024; // 2MB
-
-        if ($_FILES['profile_image']['size'] > $maxSize) {
-            die("Image too large. Maximum size is 2MB.");
-        }
-    $image = mysqli_real_escape_string($connection, $image);
+    $image = mysqli_real_escape_string($database->getConnection(), $image);
 }
 
-$sql = "INSERT INTO users
-(first_name, last_name, address, country, gender, skills, username, password_hash, profile_image)
-VALUES
-('{$_POST['first_name']}',
- '{$_POST['last_name']}',
- '{$_POST['address']}',
- '{$_POST['country']}',
- '{$_POST['gender']}',
- '$skills',
- '{$_POST['username']}',
- '{$_POST['password']}',
- '$image')";
-
-if (mysqli_query($connection, $sql)) {
+if ($userObj->createUser($first_name, $last_name, $address, $country, $gender, $skills, $username, $password, $image)) {
     header("Location: data.php");
     exit;
 } else {
-    echo "Error: " . mysqli_error($connection);
+    echo "Error: " . mysqli_error($database->getConnection());
 }
 
-mysqli_close($connection);
+$database->closeConnection();
 
 ?>

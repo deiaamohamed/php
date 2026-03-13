@@ -8,10 +8,16 @@ if (isset($_POST['skills'])) {
     $skills = "";
 }
 
-$image = "";
+
 
 if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+
     $image = file_get_contents($_FILES['profile_image']['tmp_name']);
+    $maxSize = 2 * 1024 * 1024; // 2MB
+
+        if ($_FILES['profile_image']['size'] > $maxSize) {
+            die("Image too large. Maximum size is 2MB.");
+        }
     $image = mysqli_real_escape_string($connection, $image);
 }
 

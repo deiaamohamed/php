@@ -84,6 +84,7 @@
             <div class="mb-3">
                 <label for="profile_image" class="form-label">Profile Image:</label>
                 <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*" required>
+                <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
             </div>
 
             <div class="mb-3">

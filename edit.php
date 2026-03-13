@@ -35,10 +35,18 @@ $user = mysqli_fetch_assoc($result);
 
 <div class="card-body">
 
-<form action="update.php" method="POST">
+<form action="update.php" method="POST" enctype="multipart/form-data" >
 
 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-
+<div class="mb-3">
+<label class="form-label">Profile Image</label><br>
+<?php if(!empty($user['profile_image'])): ?>
+    <img src="data:image/jpeg;base64,<?php echo base64_encode($user['profile_image']); ?>" width="80" height="80" style="object-fit:cover;" class="rounded mb-2">
+<?php else: ?>
+    No Image
+<?php endif; ?>
+<input type="file" name="profile_image" class="form-control" accept="image/*">
+</div>
 <div class="mb-3">
 <label class="form-label">First Name</label>
 <input type="text" class="form-control" name="first_name" value="<?php echo $user['first_name']; ?>">

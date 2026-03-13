@@ -1,22 +1,27 @@
 <?php
-require "dbconfig.php";
-    session_start();
+session_start();
 
-if(!isset($_SESSION['user_id'])){
+require "classes/Database.php";
+require "classes/User.php";
+require "classes/Auth.php";
+
+$database = new Database();
+$userObj = new User($database);
+$auth = new Auth($userObj);
+
+if(!$auth->isLoggedIn()) {
     header("Location: login.php");
     exit();
 }
+
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM users WHERE id = $id";
-$result = mysqli_query($connection, $sql);
+$user = $userObj->getUserById($id);
 
-if(mysqli_num_rows($result) == 0){
+if(!$user) {
     echo "User not found";
     exit();
 }
-
-$user = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -91,5 +96,5 @@ $user = mysqli_fetch_assoc($result);
 </html>
 
 <?php
-mysqli_close($connection);
+$database->closeConnection();
 ?>

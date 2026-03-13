@@ -1,23 +1,33 @@
 <?php
-require "dbconfig.php";
-    session_start();
+session_start();
 
-if(!isset($_SESSION['user_id'])){
+require "classes/Database.php";
+require "classes/User.php";
+require "classes/Auth.php";
+
+$database = new Database();
+$userObj = new User($database);
+$auth = new Auth($userObj);
+
+if(!$auth->isLoggedIn()) {
     header("Location: login.php");
     exit();
 }
 
 $id = $_GET['id'];
 
-$check = mysqli_query($connection, "SELECT id FROM users WHERE id = $id");
-if (mysqli_num_rows($check) == 0) {
+$user = $userObj->getUserById($id);
+if (!$user) {
     echo "User not found.";
     exit();
 }
 
-mysqli_query($connection, "DELETE FROM users WHERE id = $id");
+$userObj->deleteUser($id);
 
-mysqli_close($connection);
+$database->closeConnection();
+
+header("Location: data.php");
+exit();
 
 header("Location: data.php");
 exit();
